@@ -10,9 +10,8 @@ for tc in range(test_case):
 
     length = int(length)
 
-    numbers = []
-    while(len(numbers) < length):                   # 여러줄로 입력되고 있으므로 총 길이에 해당하는 값이 될 때까지 계속 입력받자
-        numbers = numbers + list(input().split())
+
+    numbers = list(input().split())
 
     for i in range(len(numbers)):
         numbers[i] = a_to_num[numbers[i]]           # 딕셔너리를 이용해 int로 변경
@@ -25,6 +24,6 @@ for tc in range(test_case):
 
 
     print(numbering)
-    print(*numbers)
+    print(*numbers)                                 # output 메모장 예시와 달리 이렇게만 해도 정답 취급임
 
 
