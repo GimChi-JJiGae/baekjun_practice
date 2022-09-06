@@ -9,7 +9,7 @@ input = lambda : sys.stdin.readline().strip()
 
 target = int(input())
 
-square_num_li = [i*i for i in range(1, int(math.floor(math.sqrt(target)))+1)]
+square_num_li = [i*i for i in range(1, int(math.sqrt(target))+1)]
 square_num_li_2 = [sum(k) for k in combinations_with_replacement(square_num_li, 2)]
 
 
