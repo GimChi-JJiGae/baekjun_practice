@@ -1,35 +1,35 @@
 import math
 import sys
+from itertools import combinations_with_replacement
 
 input = lambda : sys.stdin.readline().strip()
 
-min_count = 5
-
-def find_lagran(tg,count):
-    if count == 5:
-        return False
-
-    global min_count
-    if count >= min_count:
-        return False
-    if tg == 0:
-        if count < min_count:
-            min_count = count
-        else:
-            return False
-
-    a = math.floor(math.sqrt(tg))
-    for i in range(a, a//2, -1):
-        result = find_lagran(tg - i**2, count + 1)
-        if result == False:
-            continue
-    else:
-        return False
+# 우리는 어차피 4개로 이루어 진다는 사실을 안다.
+# 코드 참조 https://www.acmicpc.net/source/48349027
 
 target = int(input())
 
-find_lagran(target, 0)
-print(min_count)
+square_num_li = [i*i for i in range(1, int(math.floor(math.sqrt(target)))+1)]
+square_num_li_2 = [sum(k) for k in combinations_with_replacement(square_num_li, 2)]
 
 
+def find_answer(tg):
+    if tg in square_num_li:
+        print(1)
+        return
 
+    elif tg in square_num_li_2:
+        print(2)
+        return
+
+    else:
+        for i in square_num_li_2:
+            temp = tg - i
+            if temp in square_num_li:
+                print(3)
+                return
+    print(4)
+    return
+
+
+find_answer(target)
