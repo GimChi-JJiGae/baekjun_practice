@@ -12,11 +12,13 @@ for tc in range(1, testcase + 1):
     for i in range(N):
         for j in range(N):
 
+            # 행렬안의 숫자를 하나씩 돌며 시계방향으로 체크할 예정이다.
 
-
-            for k in range(1, min(i, N - (j + 1))+1):
-                for l in range(1, min(N- (i + 1), (N - (j + k + 1)))+1):
-                    way = []
+            for k in range(1, min(i, N - (j + 1))+1):                   # 위, 오른쪽 중 가까운 거리 만큼
+                for l in range(1, min(N- (i + 1), (N - (j + k + 1)))+1):    # 오른쪽, 아래 중 가까운 거리만큼
+                    if (k + l) * 2 < max_length:
+                        continue
+                    way = []                                                # 지나간 값들을 여기에 저장
                     new_i = i
                     new_j = j
                     way.append(matrix[new_i][new_j])
@@ -40,7 +42,7 @@ for tc in range(1, testcase + 1):
 
 
                     len_a = len(way)
-                    len_b = len(set(tuple(way)))
+                    len_b = len(set(tuple(way)))        # 중복이 있는지를 확인하기 위함
                     if len_a == len_b:
                         if max_length < len_a:
                             max_length = len_a
