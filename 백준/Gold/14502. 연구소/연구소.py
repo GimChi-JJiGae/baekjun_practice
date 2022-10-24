@@ -55,7 +55,7 @@ for num1 in range(M + 1, (N + 2)*(M + 2) - M - 2):  # 첫번째 벽
                     for j in range(M + 2):
                         if matrix[i][j] == 2:       # 바이러스 위치를 찾는다.
                             for k in range(4):
-                                if matrix[i + di[k]][j + dj[k]] != 2:   # 퍼질수 있는지 확인
+                                if matrix[i + di[k]][j + dj[k]] == 0:   # 퍼질수 있는지 확인
                                     break
                             else:
                                 continue
