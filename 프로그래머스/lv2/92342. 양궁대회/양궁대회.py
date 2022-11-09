@@ -1,12 +1,14 @@
 max_gap = -56
 answers = []
 count = 0
-
+max_depth = 0
 def ShootOrNot(info, history, index, arrow):
 
     global max_gap
     global answers
     global count
+    global max_depth
+
     if arrow == 0:
         if len(history) < 11:
             for i in range(11 - len(history)):
@@ -23,11 +25,19 @@ def ShootOrNot(info, history, index, arrow):
         if gap >= max_gap:
             if gap > max_gap:
                 answers.clear()
+                max_depth = 0
                 count = 1
             else:
                 count += 1
-            answers.append(history)
+
+            if max_depth <= index:
+                answers.append(history)
+                max_depth = index
+            else:
+                answers.insert(0, history)
+
             max_gap = gap
+
         return
 
     if index == 11:
@@ -48,10 +58,16 @@ def ShootOrNot(info, history, index, arrow):
         if gap >= max_gap:
             if gap > max_gap:
                 answers.clear()
+                max_depth = 0
                 count = 0
             else:
                 count += 1
-            answers.append(history)
+            if max_depth <= index:
+                answers.append(history)
+                max_depth = index
+            else:
+                answers.insert(0, history)
+
             max_gap = gap
         return
 
@@ -69,23 +85,10 @@ def solution(n, info):
     global answers
     global count
     ShootOrNot(info, [], 0, n)
+
     if max_gap <= 0:
         answer = [-1]
     else:
-        if count == 1:
-            answer = answers[-1]
-        else:
-            result = [''] * count
-            for j in range(10, -1, -1):
-                for i in range(count):
-                    result[i] = result[i] + str(answers[i][j])
-            what_we_want = '0'
-            what_we_want_idx = 0
-
-            for i in range(count):
-                if result[i] > what_we_want:
-                    what_we_want = result[i]
-                    what_we_want_idx = i
-            answer = answers[what_we_want_idx]
+        answer = answers[-1]
 
     return answer
