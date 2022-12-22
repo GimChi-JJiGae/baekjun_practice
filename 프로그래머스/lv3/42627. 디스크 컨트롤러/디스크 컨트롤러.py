@@ -12,7 +12,7 @@ def solution(jobs):
                 jobs.pop(i)
                 break
 
-            if i == len(jobs) - 1:
-                now += 1
+        else:
+            now += 1
 
     return total_time // total_jobs
