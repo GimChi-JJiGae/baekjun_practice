@@ -7,7 +7,7 @@ def solution(queue1, queue2):
     sum1 = sum(queue1)
     sum2 = sum(queue2)
     total_sum = sum1 + sum2
-    max_len = len(queue1) * 3
+    max_len = len(queue1) * 2.5
     if total_sum % 2:
         return -1
     elif sum1 == sum2:
