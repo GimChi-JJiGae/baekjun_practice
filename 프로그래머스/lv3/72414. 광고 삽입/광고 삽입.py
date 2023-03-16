@@ -38,9 +38,6 @@ def solution(play_time, adv_time, logs):
                 max_view = time_list[i]
                 max_time = i - adv_long + 1
 
-    if max_time < 0:
-        max_time = 0
-
     answer = answer + str(max_time // 3600) + ":"
     if len(answer) < 3:
         answer = "0" + answer
