@@ -1,63 +1,72 @@
 #include <iostream>
+#include <vector>
 #include <queue>
-#include <cstring>
+#include <climits>
+
 using namespace std;
 
-int y_ar[4] = { 0,0,-1,1 };
-int x_ar[4] = { 1,-1,0,0 };
-int n;
-int arr[130][130];
-int dist[130][130];
+typedef pair<int, int> pii;
 
-void bfs() {
-
-	queue <pair<int, int>> pq;
-
-	pq.push(make_pair(0, 0));
-	dist[0][0] = arr[0][0];
-    
-	while (!pq.empty()) {
-		
-		int y = pq.front().first;
-		int x = pq.front().second;
-		pq.pop();
-
-		for (int i = 0; i < 4; i++) {
-			int ny = y + y_ar[i];
-			int nx = x + x_ar[i];
-			
-
-			if (ny >= 0 && ny < n && nx >= 0 && nx < n) {
-				if ( dist[ny][nx] > dist[y][x] + arr[ny][nx]) {
-					dist[ny][nx] = dist[y][x] + arr[ny][nx];
-					pq.push(make_pair(ny, nx));
-				}
-			}
-		}
-	}
-
-}
+const int INF = INT_MAX;
 
 int main() {
-	ios_base::sync_with_stdio(0);
+    int N, tc = 1;
+    ios_base::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
-
-	int cnt = 1;
-
-	while (1) {
-		cin >> n;
-		if (n == 0)
-			break;
-
-		for (int i = 0; i < n; i++)
-			for (int j = 0; j < n; j++) {
-				cin >> arr[i][j];
-				dist[i][j] = 2000000000;
-			}
-		
-		bfs();
-		cout << "Problem " << cnt++ << ": " << dist[n - 1][n - 1] << "\n";
-	}
-
-	return 0;
+    
+    while (true) {
+        cin >> N;
+        
+        if (N == 0) {
+            break;
+        }
+        
+        vector<vector<int>> cave(N, vector<int>(N));
+        vector<vector<int>> dist(N, vector<int>(N, INF));
+        vector<vector<int>> cost(N, vector<int>(N));
+        
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                cin >> cave[i][j];
+            }
+        }
+        
+        dist[0][0] = cave[0][0];
+        
+        priority_queue<pair<int, pii>, vector<pair<int, pii>>, greater<pair<int, pii>>> pq;
+        pq.push({ cave[0][0], {0, 0} });
+        
+        while (!pq.empty()) {
+            int x = pq.top().second.first;
+            int y = pq.top().second.second;
+            int d = pq.top().first;
+            pq.pop();
+            
+            if (d > dist[x][y]) {
+                continue;
+            }
+            
+            int dx[4] = {-1, 1, 0, 0};
+            int dy[4] = {0, 0, -1, 1};
+            
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                
+                if (nx >= 0 && nx < N && ny >= 0 && ny < N) {
+                    int nd = d + cave[nx][ny];
+                    
+                    if (nd < dist[nx][ny]) {
+                        dist[nx][ny] = nd;
+                        pq.push({ nd, {nx, ny} });
+                    }
+                }
+            }
+        }
+        
+        cout << "Problem " << tc << ": " << dist[N - 1][N - 1] << endl;
+        tc++;
+    }
+    
+    return 0;
 }
