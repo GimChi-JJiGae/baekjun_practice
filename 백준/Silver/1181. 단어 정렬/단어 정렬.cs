@@ -1,34 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+namespace Solution {
 
-class Program
-{
-    static void Main()
-    {
-        int n = int.Parse(Console.ReadLine());
-        HashSet<string> wordSet = new HashSet<string>();
+    // Linq까  using System.Linq없이 사용가능한지 확인용
+    
+    class Program {
+    static void Main(string[] args) {
 
-        for (int i = 0; i < n; i++)
-        {
-            string word = Console.ReadLine();
-            wordSet.Add(word);
-        }
+      var n = int.Parse(Console.ReadLine()!);
 
-        List<string> wordList = wordSet.ToList();
+      var words = new string[n];
+      for (int i = 0; i < n; i++)
+        words[i] = Console.ReadLine()!;
 
-        wordList.Sort((a, b) =>
-        {
-            if (a.Length == b.Length)
-            {
-                return string.Compare(a, b);
-            }
-            return a.Length.CompareTo(b.Length);
-        });
+      words = words
+            .Distinct()
+            .OrderBy(w => w.Length)
+            .ThenBy(w => w)
+            .ToArray();
 
-        foreach (string word in wordList)
-        {
-            Console.WriteLine(word);
-        }
+      foreach (var word in words)
+        Console.WriteLine(word);
+
     }
+  }
 }
